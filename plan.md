@@ -57,6 +57,12 @@ This guide provides a comprehensive walkthrough for implementing an AI Agent tha
   - `secrets` for generating secure random numbers (used for PIN generation).
   - `os` for accessing environment variables.
   - `requests.auth` for handling HTTP Basic Authentication.
+- **Environment Variables**:
+  - `ZENDESK_SUBDOMAIN`: Your Zendesk subdomain.
+  - `ZENDESK_EMAIL`: Your Zendesk account email.
+  - `ZENDESK_API_TOKEN`: Your Zendesk API token.
+  - `HTTP_USERNAME`: Username for HTTP Basic Authentication.
+  - `HTTP_PASSWORD`: Password for HTTP Basic Authentication.
 
 ---
 
@@ -734,6 +740,7 @@ By following this guide, you can implement an AI Agent that interacts with Zende
 **Note**: Replace placeholders like `ZENDESK_SUBDOMAIN`, `ZENDESK_EMAIL`, and `ZENDESK_API_TOKEN` with your actual Zendesk subdomain, email, and API token, respectively.
 
 ---
+
 
 
 
