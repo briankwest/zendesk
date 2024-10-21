@@ -1,4 +1,4 @@
-# **Comprehensive Implementation Guide: Integrating SWAIG with Zendesk Support API and Support PIN Authentication**
+# **Comprehensive Implementation Guide: Integrating SignalWire AI Gateway (SWAIG) with Zendesk Support API**
 
 ---
 
