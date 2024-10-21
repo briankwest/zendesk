@@ -324,5 +324,13 @@ def swaig_handler():
         else:
             return jsonify({"error": "Function not found"}), 404
 
+@app.route('/', methods=['GET'])
+@app.route('/swaig', methods=['GET'])
+def serve_zendesk_html():
+    try:
+        return app.send_static_file('zendesk.html')
+    except Exception as e:
+        return jsonify({"error": "Failed to serve zendesk.html"}), 500
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
