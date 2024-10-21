@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zendesk AI Agent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1, h2 {
+            color: #4a4a8c;
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4a4a8c;
+            color: #fff;
+            width: 150px;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            color: #4a4a8c;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .function-title {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        .description {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Zendesk AI Agent Functions</h1>
+        <p>This document provides an overview of the functions available for the Zendesk AI Agent integration.</p>
+        <h2>Available Functions:</h2>
+        <ul>
+            <li>
+                <div class="function-title">Create a new support ticket</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>create_ticket</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>subject (required), comment_body (required), requester_name, requester_email, priority, tags, custom_fields</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Creates a new support ticket in Zendesk.</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <div class="function-title">Update an existing support ticket</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>update_ticket</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>ticket_id (required), status, priority, comment_body, public, tags, custom_fields</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Updates an existing support ticket in Zendesk.</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <div class="function-title">Close a support ticket</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>close_ticket</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>ticket_id (required), comment_body, public</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Closes a support ticket in Zendesk by setting its status to 'closed'.</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <div class="function-title">Add a comment to a ticket</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>add_comment</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>ticket_id (required), comment_body (required), public</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Adds a comment to an existing support ticket in Zendesk.</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <div class="function-title">Retrieve ticket information</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>get_ticket</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>ticket_id (required)</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Retrieves information about a specific ticket in Zendesk.</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <div class="function-title">Verify support PIN</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>verify_support_pin</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>caller_phone_number (required), entered_pin (required)</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Verifies the caller's support PIN against the stored PIN in Zendesk.</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <div class="function-title">Retrieve current user's tickets</div>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <td>get_current_user_tickets</td>
+                    </tr>
+                    <tr>
+                        <th>Parameters</th>
+                        <td>caller_phone_number (required), status, priority</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>Retrieves ticket numbers for the authenticated user based on their phone number.</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+        <p>For more information, visit the <a href="https://github.com/your-repo/zendesk-agent">GitHub repository</a>.</p>
+    </div>
+</body>
+</html>
