@@ -102,7 +102,7 @@ For each function, we provide:
 
 - **Function Name**
 - **Description**
-- **SignalWire AI Gateway (SWAIG)**: Defines the function for OpenAI's API.
+- **SignalWire AI Gateway (SWAIG)**: Defines the function for SWAIG.
 - **Zendesk API Endpoint**
 
 #### **Function 1: create_ticket**
