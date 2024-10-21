@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import os
 import requests
 from dotenv import load_dotenv
@@ -328,7 +328,7 @@ def swaig_handler():
 @app.route('/swaig', methods=['GET'])
 def serve_zendesk_html():
     try:
-        return app.send_static_file('zendesk.html')
+        return send_file('zendesk.html')
     except Exception as e:
         return jsonify({"error": "Failed to serve zendesk.html"}), 500
 
