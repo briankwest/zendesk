@@ -12,7 +12,7 @@
    - 1.2 [Create Custom User Fields (Support PIN)](#12-create-custom-user-fields-support-pin)
 5. [Step 2: Set Up SignalWire AI Gateway (SWAIG)](#step-2-set-up-signalwire-ai-gateway-swaig)
 6. [Step 3: Define SWAIG Functions Mapping to Zendesk API](#step-3-define-swaig-functions-mapping-to-zendesk-api)
-   - 3.1 [Function Definitions with OpenAI Tool JSON](#31-function-definitions-with-openai-tool-json)
+   - 3.1 [Function Definitions with SignalWire AI Gateway (SWAIG)](#31-function-definitions-with-openai-tool-json)
    - 3.2 [Full Function Implementations](#32-full-function-implementations)
 7. [Step 4: Implement Support PIN Authentication](#step-4-implement-support-pin-authentication)
    - 4.1 [Generate and Assign Support PINs](#41-generate-and-assign-support-pins)
@@ -24,7 +24,7 @@
 11. [Step 8: Security Considerations](#step-8-security-considerations)
 12. [Conclusion](#conclusion)
 13. [Appendix: Code Examples](#appendix-code-examples)
-    - A. [OpenAI Tool JSON Definitions](#a-openai-tool-json-definitions)
+    - A. [SignalWire AI Gateway (SWAIG) Definitions](#a-openai-tool-json-definitions)
     - B. [Complete Function Code Implementations](#b-complete-function-code-implementations)
 
 ---
@@ -96,13 +96,13 @@ This guide provides a comprehensive walkthrough for implementing an AI Agent tha
 
 ## **Step 3: Define SWAIG Functions Mapping to Zendesk API**
 
-### **3.1 Function Definitions with OpenAI Tool JSON**
+### **3.1 Function Definitions with SignalWire AI Gateway (SWAIG)**
 
 For each function, we provide:
 
 - **Function Name**
 - **Description**
-- **OpenAI Tool JSON**: Defines the function for OpenAI's API.
+- **SignalWire AI Gateway (SWAIG)**: Defines the function for OpenAI's API.
 - **Zendesk API Endpoint**
 
 #### **Function 1: create_ticket**
@@ -110,7 +110,7 @@ For each function, we provide:
 - **Description**: Creates a new support ticket in Zendesk.
 - **Zendesk API Endpoint**: `POST /api/v2/tickets.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -152,7 +152,7 @@ For each function, we provide:
 - **Description**: Updates an existing support ticket in Zendesk.
 - **Zendesk API Endpoint**: `PUT /api/v2/tickets/{ticket_id}.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -199,7 +199,7 @@ For each function, we provide:
 - **Description**: Closes a support ticket in Zendesk by updating its status to "closed".
 - **Zendesk API Endpoint**: `PUT /api/v2/tickets/{ticket_id}.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -223,7 +223,7 @@ For each function, we provide:
 - **Description**: Adds a comment to an existing support ticket in Zendesk.
 - **Zendesk API Endpoint**: `PUT /api/v2/tickets/{ticket_id}.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -257,7 +257,7 @@ For each function, we provide:
 - **Description**: Retrieves information about a specific ticket in Zendesk.
 - **Zendesk API Endpoint**: `GET /api/v2/tickets/{ticket_id}.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -281,7 +281,7 @@ For each function, we provide:
 - **Description**: Verifies the caller's support PIN against the stored PIN in Zendesk.
 - **Zendesk API Endpoint**: `GET /api/v2/search.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -309,7 +309,7 @@ For each function, we provide:
 - **Description**: Retrieves ticket numbers for the authenticated user.
 - **Zendesk API Endpoint**: `GET /api/v2/users/{user_id}/tickets/requested.json`
 
-**OpenAI Tool JSON Definition**:
+**SignalWire AI Gateway (SWAIG) Definition**:
 
 ```json
 {
@@ -721,7 +721,7 @@ By following this guide, you can implement an AI Agent that interacts with Zende
 
 ## **Appendix: Code Examples**
 
-### **A. OpenAI Tool JSON Definitions**
+### **A. SignalWire AI Gateway (SWAIG) Definitions**
 
 [Provided in Section 3.1]
 
