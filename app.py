@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file
 import os
 import requests
 from dotenv import load_dotenv
+from flask_httpauth import HTTPBasicAuth
 
 # Load environment variables from .env file
 load_dotenv()
@@ -12,6 +13,17 @@ app = Flask(__name__)
 ZENDESK_SUBDOMAIN = os.getenv('ZENDESK_SUBDOMAIN')
 ZENDESK_API_TOKEN = os.getenv('ZENDESK_API_TOKEN')
 ZENDESK_EMAIL = os.getenv('ZENDESK_EMAIL')
+HTTP_USERNAME = os.getenv('HTTP_USERNAME')
+HTTP_PASSWORD = os.getenv('HTTP_PASSWORD')
+
+
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username, password):
+    if username == HTTP_USERNAME and password == HTTP_PASSWORD:
+        return True
+    return False
 
 # Helper function to authenticate with Zendesk using Bearer token
 from requests.auth import HTTPBasicAuth
@@ -265,6 +277,7 @@ SWAIG_FUNCTION_SIGNATURES = {
 }
 
 @app.route('/swaig', methods=['POST'])
+@auth.login_required
 def swaig_handler():
     data = request.json
     action = data.get('action')
