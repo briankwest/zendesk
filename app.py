@@ -180,7 +180,6 @@ def get_current_user_tickets(caller_phone_number, status=None, priority=None):
 
 SWAIG_FUNCTION_SIGNATURES = {
     "create_ticket": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Create a new Zendesk ticket",
         "function": "create_ticket",
         "argument": {
@@ -196,7 +195,6 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "update_ticket": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Update an existing Zendesk ticket",
         "function": "update_ticket",
         "argument": {
@@ -211,7 +209,6 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "close_ticket": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Close a Zendesk ticket",
         "function": "close_ticket",
         "argument": {
@@ -223,7 +220,6 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "add_comment": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Add a comment to a Zendesk ticket",
         "function": "add_comment",
         "argument": {
@@ -237,7 +233,6 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "get_ticket": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Retrieve details of a Zendesk ticket",
         "function": "get_ticket",
         "argument": {
@@ -249,7 +244,6 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "verify_support_pin": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Verify a support PIN for a user",
         "function": "verify_support_pin",
         "argument": {
@@ -262,7 +256,6 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "get_current_user_tickets": {
-        "web_hook_url": "http://swag-server/swaig",
         "purpose": "Retrieve ticket numbers for the authenticated user",
         "function": "get_current_user_tickets",
         "argument": {
@@ -300,8 +293,8 @@ def swaig_handler():
 
             new_url = urlunsplit((split_url.scheme, netloc, split_url.path, split_url.query, split_url.fragment))
             SWAIG_FUNCTION_SIGNATURES[func]["web_hook_url"] = f"{new_url}/swaig"
-            SWAIG_FUNCTION_SIGNATURES[func]["username"] = HTTP_USERNAME
-            SWAIG_FUNCTION_SIGNATURES[func]["password"] = HTTP_PASSWORD
+            SWAIG_FUNCTION_SIGNATURES[func]["web_hook_auth_user"] = HTTP_USERNAME
+            SWAIG_FUNCTION_SIGNATURES[func]["web_hook_auth_pass"] = HTTP_PASSWORD
         
         if requested_functions == '':
             requested_functions = avaliable_functions
