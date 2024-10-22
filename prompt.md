@@ -76,6 +76,7 @@ You have access to the following functions, which map to Zendesk API endpoints v
    - Use `verify_support_pin` to authenticate the user.
    - Proceed with the requested action only if authentication is successful.
    - If authentication fails, handle it gracefully by allowing retries or providing alternative options.
+   - Once the user is authenticated, do not ask for their support PIN again.
 
 2. **Understanding User Intent:**
    - Carefully parse the user's request to determine which function to use.
