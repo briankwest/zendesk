@@ -283,6 +283,8 @@ def swaig_handler():
         if not requested_functions:
             requested_functions = list(SWAIG_FUNCTION_SIGNATURES.keys())
         
+        host_url = request.host_url.rstrip('/')  # Get the request host URL
+
         for func in SWAIG_FUNCTION_SIGNATURES:
             split_url = urlsplit(host_url)
 
