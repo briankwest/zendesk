@@ -24,7 +24,7 @@
                   "verify_support_pin",
                   "get_current_user_tickets"
                 ],
-                  "url": "https://{HTTP_USERNAME{:{HTTP_PASSWORD}@zendesk_app_deployment/swaig"
+                  "url": "https://{HTTP_USERNAME}:{HTTP_PASSWORD}@zendesk_app_deployment/swaig"
               }
             ],
             "native_functions": []
