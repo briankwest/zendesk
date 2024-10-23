@@ -171,13 +171,9 @@ def get_current_user_tickets(caller_phone_number, status=None, priority=None):
             return formatted_tickets
 
         else:
-            return {
-                'message': "No tickets found for your account."
-            }
+            return f"No tickets currently open"
     else:
-        return {
-            'message': "User not found."
-        }
+        return f"User not found."
 
 SWAIG_FUNCTION_SIGNATURES = {
     "create_ticket": {
