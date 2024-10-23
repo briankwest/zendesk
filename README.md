@@ -242,10 +242,6 @@ For each function, we provide:
         "type": "integer",
         "description": "The ID of the ticket to add a comment to."
       },
-      "comment_body": {
-        "type": "string",
-        "description": "Content of the comment."
-      },
       "public": {
         "type": "boolean",
         "description": "Whether the comment is public (visible to the requester).",
@@ -253,7 +249,7 @@ For each function, we provide:
         "nullable": true
       }
     },
-    "required": ["ticket_id", "comment_body"]
+    "required": ["ticket_id"]
   }
 }
 ```
@@ -740,6 +736,7 @@ By following this guide, you can implement an AI Agent that interacts with Zende
 **Note**: Replace placeholders like `ZENDESK_SUBDOMAIN`, `ZENDESK_EMAIL`, and `ZENDESK_API_TOKEN` with your actual Zendesk subdomain, email, and API token, respectively.
 
 ---
+
 
 
 

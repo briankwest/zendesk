@@ -92,8 +92,8 @@ def close_ticket(ticket_id):
     else:
         return "Error: Unable to close the ticket. Please try again later."
 
-def add_comment(ticket_id, comment_body, public=True):
-    response = update_ticket(ticket_id, comment_body=comment_body, public=public)
+def add_comment(ticket_id, public=True):
+    response = update_ticket(ticket_id, public=public)
     if response.status_code == 200:
         return "The case has been updated with the new information."
     return "Error: Unable to add comment to the ticket. Please try again later."
@@ -118,6 +118,7 @@ def verify_support_pin(caller_phone_number, entered_pin):
     if support_pin == entered_pin:
         return f"User verified no need to ask for their support PIN any more, user_id: {user.get('id')} requester_email: {user.get('email')} requester_name: {user.get('name')}"
     return "User not verified"
+
 def find_user_by_phone(caller_phone_number):
     url = f'https://{ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json'
     params = {'query': f'type:user phone:"{caller_phone_number}"'}
@@ -144,25 +145,21 @@ def list_user_tickets(user_id, status=None, priority=None, page=1, per_page=25):
         print(f"Failed to retrieve tickets. Status code: {response.status_code}")
         return None
 
-    tickets = response.json()
+    tickets = response.json().get('tickets', [])
     if status or priority:
-        filtered_tickets = []
-        for ticket in tickets.get('tickets', []):
-            if status and ticket.get('status') != status:
-                continue
-            if priority and ticket.get('priority') != priority:
-                continue
-            filtered_tickets.append(ticket)
-        tickets['tickets'] = filtered_tickets
+        tickets = [
+            ticket for ticket in tickets
+            if (not status or ticket.get('status') == status) and
+               (not priority or ticket.get('priority') == priority)
+        ]
 
-    explanation = "Here is the list of tickets with their details:\n"
-    formatted_tickets = [explanation]
-    for ticket in tickets.get('tickets', []):
-        formatted_tickets.append(
-            f"Ticket ID: {ticket.get('id')}, Subject: {ticket.get('subject')}, Status: {ticket.get('status')}"
-        )
-    print("\n".join(formatted_tickets))
     return tickets
+
+def format_ticket_list(tickets):
+    return "\n".join(
+        f"TicketId: {ticket.get('id')}, Subject: {ticket.get('subject')}, Status: {ticket.get('status')}"
+        for ticket in tickets
+    )
 
 def get_current_user_tickets(caller_phone_number, status=None, priority=None):
     user = find_user_by_phone(caller_phone_number)
@@ -170,11 +167,9 @@ def get_current_user_tickets(caller_phone_number, status=None, priority=None):
         user_id = user['id']
         tickets = list_user_tickets(user_id, status=status, priority=priority)
         if tickets:
-            ticket_numbers = [ticket['id'] for ticket in tickets.get('tickets', [])]
-            return {
-                'ticket_numbers': ticket_numbers,
-                'tickets': tickets.get('tickets', [])
-            }
+            formatted_tickets = format_ticket_list(tickets)
+            return formatted_tickets
+
         else:
             return {
                 'message': "No tickets found for your account."
@@ -232,10 +227,9 @@ SWAIG_FUNCTION_SIGNATURES = {
             "type": "object",
             "properties": {
                 "ticket_id": {"type": "integer", "description": "The ID of the ticket to comment on."},
-                "comment_body": {"type": "string", "description": "The body of the comment."},
                 "public": {"type": "boolean", "description": "Whether the comment is public.", "default": True}
             },
-            "required": ["ticket_id", "comment_body"]
+            "required": ["ticket_id"]
         }
     },
     "get_ticket": {

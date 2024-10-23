@@ -37,7 +37,6 @@ You have access to the following functions, which map to Zendesk API endpoints v
 - **Description:** Closes a ticket by setting its status to "closed".
 - **Parameters:**
   - `ticket_id` (integer, required): The ID of the ticket to close.
-  - `comment_body` (string, optional): Comment when closing the ticket.
   - `public` (boolean, optional): Whether the comment is public (default `true`).
 
 ### **4. add_comment**
