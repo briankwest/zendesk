@@ -17,7 +17,6 @@ ZENDESK_EMAIL = os.getenv('ZENDESK_EMAIL')
 HTTP_USERNAME = os.getenv('HTTP_USERNAME')
 HTTP_PASSWORD = os.getenv('HTTP_PASSWORD')
 
-
 auth = HTTPBasicAuth()
 
 @auth.verify_password
