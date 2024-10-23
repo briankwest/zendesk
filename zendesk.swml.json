@@ -35,13 +35,6 @@
               "function_fillers": "hold",
               "language": "English",
               "name": "English",
-              "speech_fillers": "hold",
-              "voice": "elevenlabs.rachel"
-            },
-            {
-              "code": "es",
-              "language": "Spanish",
-              "name": "Spanish",
               "voice": "elevenlabs.rachel"
             }
           ],
