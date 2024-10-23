@@ -107,9 +107,16 @@ def get_ticket(ticket_id):
 def verify_support_pin(caller_phone_number, entered_pin):
     user = find_user_by_phone(caller_phone_number)
     support_pin = user.get('user_fields', {}).get('support_pin')
+    
+    # Convert both entered_pin and support_pin to integers for comparison
+    try:
+        entered_pin = int(entered_pin)
+        support_pin = int(support_pin)
+    except (ValueError, TypeError):
+        return "User not verified"
 
-    if support_pin and str(support_pin).strip() == cleaned_entered_pin:
-        return f"User verified, user_id: {user.get('id')} requester_email: {user.get('email')} requester_name: {user.get('name')}"
+    if support_pin == entered_pin:
+        return f"User verified no need to ask for their support PIN any more, user_id: {user.get('id')} requester_email: {user.get('email')} requester_name: {user.get('name')}"
     return "User not verified"
 def find_user_by_phone(caller_phone_number):
     url = f'https://{ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json'
@@ -282,6 +289,8 @@ def swaig_handler():
         if not requested_functions:
             requested_functions = list(SWAIG_FUNCTION_SIGNATURES.keys())
         
+        host_url = request.host_url.rstrip('/')  # Get the request host URL
+
         for func in SWAIG_FUNCTION_SIGNATURES:
             split_url = urlsplit(host_url)
 
@@ -292,8 +301,6 @@ def swaig_handler():
 
             new_url = urlunsplit((split_url.scheme, netloc, split_url.path, split_url.query, split_url.fragment))
             SWAIG_FUNCTION_SIGNATURES[func]["web_hook_url"] = f"{new_url}/swaig"
-            SWAIG_FUNCTION_SIGNATURES[func]["web_hook_auth_user"] = HTTP_USERNAME
-            SWAIG_FUNCTION_SIGNATURES[func]["web_hook_auth_pass"] = HTTP_PASSWORD
         
         if requested_functions == '':
             requested_functions = avaliable_functions
@@ -332,8 +339,10 @@ def swaig_handler():
                 response = function_map[function_name](**params)
                 return jsonify({"response": response})
             except TypeError as e:
+                print(f"TypeError: {e}")
                 return jsonify({"error": f"Invalid parameters for function '{function_name}'"}), 400
             except Exception as e:
+                print(f"Exception: {e}")
                 return jsonify({"error": "An unexpected error occurred"}), 500
         else:
             return jsonify({"error": "Function not found"}), 404
