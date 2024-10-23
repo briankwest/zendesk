@@ -26,8 +26,7 @@
                 ],
                   "url": "https://{HTTP_USERNAME}:{HTTP_PASSWORD}@zendesk_app_deployment/swaig"
               }
-            ],
-            "native_functions": []
+            ]
           },
           "hints": [],
           "languages": [
