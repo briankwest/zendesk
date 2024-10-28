@@ -177,9 +177,9 @@ def get_current_user_tickets(caller_phone_number, status=None, priority=None):
 
 SWAIG_FUNCTION_SIGNATURES = {
     "create_ticket": {
-        "purpose": "Create a new Zendesk ticket",
+        "description": "Create a new Zendesk ticket",
         "function": "create_ticket",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "subject": {"type": "string", "description": "The subject of the ticket."},
@@ -192,9 +192,9 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "update_ticket": {
-        "purpose": "Update an existing Zendesk ticket",
+        "description": "Update an existing Zendesk ticket",
         "function": "update_ticket",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "ticket_id": {"type": "integer", "description": "The ID of the ticket to update."},
@@ -206,9 +206,9 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "close_ticket": {
-        "purpose": "Close a Zendesk ticket",
+        "description": "Close a Zendesk ticket",
         "function": "close_ticket",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "ticket_id": {"type": "integer", "description": "The ID of the ticket to close."}
@@ -217,9 +217,9 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "add_comment": {
-        "purpose": "Add a comment to a Zendesk ticket",
+        "description": "Add a comment to a Zendesk ticket",
         "function": "add_comment",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "ticket_id": {"type": "integer", "description": "The ID of the ticket to comment on."},
@@ -229,9 +229,9 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "get_ticket": {
-        "purpose": "Retrieve details of a Zendesk ticket",
+        "description": "Retrieve details of a Zendesk ticket",
         "function": "get_ticket",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "ticket_id": {"type": "integer", "description": "The ID of the ticket to retrieve."}
@@ -240,9 +240,9 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "verify_support_pin": {
-        "purpose": "Verify a support PIN for a user",
+        "description": "Verify a support PIN for a user",
         "function": "verify_support_pin",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "caller_phone_number": {"type": "string", "description": "The phone number of the caller."},
@@ -252,9 +252,9 @@ SWAIG_FUNCTION_SIGNATURES = {
         }
     },
     "get_current_user_tickets": {
-        "purpose": "Retrieve ticket numbers for the authenticated user",
+        "description": "Retrieve ticket numbers for the authenticated user",
         "function": "get_current_user_tickets",
-        "argument": {
+        "parameters": {
             "type": "object",
             "properties": {
                 "caller_phone_number": {"type": "string", "description": "The caller's phone number."},
