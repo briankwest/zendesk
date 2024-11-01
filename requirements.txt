@@ -13,3 +13,4 @@ requests==2.32.3
 requests_auth==8.0.0
 urllib3==2.2.3
 Werkzeug==3.0.4
+signalwire-swaig
