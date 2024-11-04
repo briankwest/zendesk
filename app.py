@@ -3,7 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from flask_httpauth import HTTPBasicAuth
-from signalwire_swaig.core import SWAIG, Parameter
+from signalwire_swaig.core import SWAIG, SWAIGArgument
 
 # Load environment variables from .env file
 load_dotenv()
@@ -53,11 +53,11 @@ swaig = SWAIG(app, auth=(HTTP_USERNAME, HTTP_PASSWORD))
 
 
 @swaig.endpoint("Create a new Zendesk ticket",
-    subject=Parameter("string", "The subject of the ticket."),
-    comment_body=Parameter("string", "The body of the initial comment."),
-    requester_name=Parameter("string", "Name of the requester."),
-    requester_email=Parameter("string", "Email of the requester."),
-    priority=Parameter("string", "Priority of the ticket.", required=False))
+    subject=SWAIGArgument("string", "The subject of the ticket."),
+    comment_body=SWAIGArgument("string", "The body of the initial comment."),
+    requester_name=SWAIGArgument("string", "Name of the requester."),
+    requester_email=SWAIGArgument("string", "Email of the requester."),
+    priority=SWAIGArgument("string", "Priority of the ticket.", required=False))
 def create_ticket(subject, comment_body, requester_name, requester_email, priority=None, meta_data_token=None, meta_data=None):
     url = f'https://{ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json'
     ticket_data = {
@@ -80,11 +80,11 @@ def create_ticket(subject, comment_body, requester_name, requester_email, priori
     return format_ticket_info(ticket_info)
 
 @swaig.endpoint("Update an existing Zendesk ticket",
-    ticket_id=Parameter("integer", "The ID of the ticket to update."),
-    status=Parameter("string", "New status of the ticket.", required=False),
-    priority=Parameter("string", "New priority of the ticket.", required=False),
-    comment_body=Parameter("string", "Additional comment to add.", required=False),
-    public=Parameter("boolean", "Whether the comment is public.", required=False, default=True))
+    ticket_id=SWAIGArgument("integer", "The ID of the ticket to update."),
+    status=SWAIGArgument("string", "New status of the ticket.", required=False),
+    priority=SWAIGArgument("string", "New priority of the ticket.", required=False),
+    comment_body=SWAIGArgument("string", "Additional comment to add.", required=False),
+    public=SWAIGArgument("boolean", "Whether the comment is public.", required=False, default=True))
 def update_ticket(ticket_id, status=None, priority=None, comment_body=None, public=True, meta_data_token=None, meta_data=None):
     url = f'https://{ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/{ticket_id}.json'
     ticket_data = {"ticket": {}}
@@ -102,7 +102,7 @@ def update_ticket(ticket_id, status=None, priority=None, comment_body=None, publ
     return response
 
 @swaig.endpoint("Close a Zendesk ticket",
-    ticket_id=Parameter("integer", "The ID of the ticket to close."))
+    ticket_id=SWAIGArgument("integer", "The ID of the ticket to close."))
 def close_ticket(ticket_id, meta_data_token=None, meta_data=None):
     response = update_ticket(ticket_id, status='closed', meta_data_token=meta_data_token, meta_data=meta_data)
     if response.status_code == 200:
@@ -111,8 +111,8 @@ def close_ticket(ticket_id, meta_data_token=None, meta_data=None):
         return "Error: Unable to close the ticket. Please try again later."
 
 @swaig.endpoint("Add a comment to a Zendesk ticket",
-    ticket_id=Parameter("integer", "The ID of the ticket to comment on."),
-    public=Parameter("boolean", "Whether the comment is public.", required=False, default=True))
+    ticket_id=SWAIGArgument("integer", "The ID of the ticket to comment on."),
+    public=SWAIGArgument("boolean", "Whether the comment is public.", required=False, default=True))
 def add_comment(ticket_id, public=True, meta_data_token=None, meta_data=None):
     response = update_ticket(ticket_id, public=public, meta_data_token=meta_data_token, meta_data=meta_data)
     if response.status_code == 200:
@@ -120,7 +120,7 @@ def add_comment(ticket_id, public=True, meta_data_token=None, meta_data=None):
     return "Error: Unable to add comment to the ticket. Please try again later."
 
 @swaig.endpoint("Retrieve details of a Zendesk ticket",
-    ticket_id=Parameter("integer", "The ID of the ticket to retrieve."))
+    ticket_id=SWAIGArgument("integer", "The ID of the ticket to retrieve."))
 def get_ticket(ticket_id, meta_data_token=None, meta_data=None):
     url = f'https://{ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/{ticket_id}.json'
     response = requests.get(url, auth=zendesk_auth())
@@ -128,8 +128,8 @@ def get_ticket(ticket_id, meta_data_token=None, meta_data=None):
     return format_ticket_info(ticket_info)
 
 @swaig.endpoint("Verify a support PIN for a user",
-    caller_phone_number=Parameter("string", "The phone number of the caller."),
-    entered_pin=Parameter("integer", "The PIN entered by the caller."))
+    caller_phone_number=SWAIGArgument("string", "The phone number of the caller."),
+    entered_pin=SWAIGArgument("integer", "The PIN entered by the caller."))
 def verify_support_pin(caller_phone_number, entered_pin, meta_data_token=None, meta_data=None):
     user = find_user_by_phone(caller_phone_number)
     support_pin = user.get('user_fields', {}).get('support_pin')
@@ -160,9 +160,9 @@ def find_user_by_phone(caller_phone_number):
     return None
 
 @swaig.endpoint("Retrieve ticket numbers for the authenticated user",
-    caller_phone_number=Parameter("string", "The caller's phone number."),
-    status=Parameter("string", "Filter tickets by status.", required=False),
-    priority=Parameter("string", "Filter tickets by priority.", required=False))
+    caller_phone_number=SWAIGArgument("string", "The caller's phone number."),
+    status=SWAIGArgument("string", "Filter tickets by status.", required=False),
+    priority=SWAIGArgument("string", "Filter tickets by priority.", required=False))
 def get_current_user_tickets(caller_phone_number, status=None, priority=None, meta_data_token=None, meta_data=None):
     user = find_user_by_phone(caller_phone_number)
     if user:
