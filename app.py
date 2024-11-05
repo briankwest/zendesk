@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, send_file
 import os
 import requests
+import random
+import logging
 from dotenv import load_dotenv
 from flask_httpauth import HTTPBasicAuth
 from signalwire_swaig.core import SWAIG, SWAIGArgument
@@ -8,7 +10,21 @@ from signalwire_swaig.core import SWAIG, SWAIGArgument
 # Load environment variables from .env file
 load_dotenv()
 
+logging.getLogger('werkzeug').setLevel(logging.WARNING)
+
+if os.environ.get('DEBUG'):
+    print("Debug mode is enabled")
+    debug_pin = f"{random.randint(100, 999)}-{random.randint(100, 999)}-{random.randint(100, 999)}"
+    os.environ['WERKZEUG_DEBUG_PIN'] = debug_pin
+    logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+    print(f"Debugger PIN: {debug_pin}")
+    
+# Initialize Flask and SWAIG
 app = Flask(__name__)
+swaig = SWAIG(
+    app,
+    auth=(os.getenv('HTTP_USERNAME'), os.getenv('HTTP_PASSWORD'))
+)
 
 # Retrieve environment variables
 ZENDESK_SUBDOMAIN = os.getenv('ZENDESK_SUBDOMAIN')
@@ -18,15 +34,6 @@ HTTP_USERNAME = os.getenv('HTTP_USERNAME')
 HTTP_PASSWORD = os.getenv('HTTP_PASSWORD')
 
 auth = HTTPBasicAuth()
-
-@auth.verify_password
-def verify_password(username, password):
-    if username == HTTP_USERNAME and password == HTTP_PASSWORD:
-        return True
-    return False
-
-# Helper function to authenticate with Zendesk using Bearer token
-from requests.auth import HTTPBasicAuth
 
 def zendesk_auth():
     return HTTPBasicAuth(f"{ZENDESK_EMAIL}/token", ZENDESK_API_TOKEN)
@@ -46,11 +53,6 @@ def format_ticket_info(ticket_info):
         f"Description: {ticket_info.get('description')}\n"
     )
     return formatted_info
-
-# Initialize SWAIG with the Flask app and authentication
-swaig = SWAIG(app, auth=(HTTP_USERNAME, HTTP_PASSWORD))
-
-
 
 @swaig.endpoint("Create a new Zendesk ticket",
     subject=SWAIGArgument("string", "The subject of the ticket."),
@@ -213,4 +215,4 @@ def serve_zendesk_html():
         return jsonify({"error": "Failed to serve zendesk.html"}), 500
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=os.getenv('PORT'), debug=os.getenv('DEBUG'))

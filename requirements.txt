@@ -3,3 +3,4 @@ Flask_HTTPAuth==4.8.0
 python-dotenv==1.0.1
 Requests==2.32.3
 signalwire_swaig==0.1.11
+gunicorn
